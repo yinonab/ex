@@ -53,6 +53,7 @@ export function BookDetails({ bookId, onBack }) {
         </p>
     )
 
+    
     return (
         <section className="book-details">
             <h2>Book Title: {book.title}</h2>
