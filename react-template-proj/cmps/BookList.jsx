@@ -1,5 +1,5 @@
 import { BookPreview } from './BookPreview.jsx'
-export function BookList({ books, onRemoveBook }) {
+export function BookList({ books, onRemoveBook,onSelectBookId }) {
 console.log(books)
     return (
         <ul className="book-list">
