@@ -3,7 +3,6 @@ import { storageService } from './async-storage.service.js'
 
 const BOOK_KEY = 'bookDB'
 _createBooks()
-// var gFilterBy = {txt: '', minSpeed: 0}
 
 
 export const bookService = {
@@ -14,19 +13,20 @@ export const bookService = {
     getEmptyBook,
     getNextBookId,
     getFilterBy,
-    setFilterBy
+    setFilterBy,
+    getDefaultFilter
 }
 
-function query() {
+function query(filterBy = {}) {
     return storageService.query(BOOK_KEY)
         .then(books => {
-            // if (gFilterBy.txt) {
-            //     const regex = new RegExp(gFilterBy.txt, 'i')
-            //     books = books.filter(book => regex.test(book.title))
-            // }
-            // if (gFilterBy.minSpeed) {
-            //     books = books.filter(book => book.maxSpeed >= gFilterBy.minSpeed)
-            // }
+            if (filterBy.txt) {
+                const regex = new RegExp(filterBy.txt, 'i')
+                books = books.filter(book => regex.test(book.txt))
+            }
+            if (filterBy.minPrice) {
+                books = books.filter(book => book.minPrice['amount'] >= filterBy.minPrice)
+            }
             return books
         })
 }
@@ -47,17 +47,17 @@ function save(book) {
     }
 }
 
-function getEmptyBook( id='',title,listPrice) {
-    return { id, title, listPrice }
+function getEmptyBook( id='',txt,minPrice) {
+    return { id, txt, minPrice }
 }
 
 function getFilterBy() {
-    return {...gFilterBy}
+    return {...filterBy}
 }
 
 function setFilterBy(filterBy = {}) {
      if (filterBy.txt !== undefined) gFilterBy.txt = filterBy.txt
-    if (filterBy.minSpeed !== undefined) gFilterBy.minSpeed = filterBy.minSpeed
+    if (filterBy.minPrice !== undefined) gFilterBy.minPrice = filterBy.minPrice
     return gFilterBy
 }
 
@@ -68,6 +68,10 @@ function getNextBookId(bookId) {
             if (idx === books.length - 1) idx = -1
             return books[idx + 1].id
         })
+}
+
+function getDefaultFilter() {
+    return { txt: '', minPrice: ''}
 }
 
 function _createBooks() {
@@ -98,7 +102,7 @@ function _createBooks() {
     }
 }
 
-function _createBook(id, title,listPrice) {
-    const book = getEmptyBook(id, title,listPrice)
+function _createBook(id, txt,minPrice) {
+    const book = getEmptyBook(id, txt,minPrice)
     return book
 }
