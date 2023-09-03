@@ -17,13 +17,13 @@ export function App() {
                 <nav className="app-nav">
                     <a onClick={() => setPage('home')} href="#">Home</a>
                     <a onClick={() => setPage('about')} href="#">About</a>
-                    {/* <a onClick={() => setPage('book')} href="#">Books</a> */}
+                    <a onClick={() => setPage('book')} href="#">Books</a>
                 </nav>
             </header>
             <main className="container">
                 {page === 'home' && <Home />}
                 {page === 'about' && <About />}
-                {/* {page === 'book' && <BookIndex />} */}
+                {page === 'book' && <BookIndex />}
             </main>
         </section>
     )
