@@ -24,8 +24,8 @@ function query(filterBy = {}) {
                 const regex = new RegExp(filterBy.txt, 'i')
                 books = books.filter(book => regex.test(book.title))
             }
-            if (filterBy.minPrice) {
-                books = books.filter(book => book.listPrice['amount'] >= filterBy.minPrice)
+            if (filterBy.listPrice) {
+                books = books.filter(book => book.listPrice.amount >= filterBy.listPrice)
             }
             return books
         })
@@ -47,8 +47,16 @@ function save(book) {
     }
 }
 
-function getEmptyBook( id='',txt,minPrice) {
-    return { id, txt, minPrice }
+function getEmptyBook(id = '', title = '') {
+  return {
+    id,
+    title,
+    listPrice: {
+      "amount": 0,
+      "currencyCode": "EUR",
+      "isOnSale": false
+    }
+  }
 }
 
 function getFilterBy() {
@@ -57,7 +65,7 @@ function getFilterBy() {
 
 function setFilterBy(filterBy = {}) {
      if (filterBy.txt !== undefined) gFilterBy.txt = filterBy.txt
-    if (filterBy.minPrice !== undefined) gFilterBy.minPrice = filterBy.minPrice
+    if (filterBy.listPrice !== undefined) gFilterBy.listPrice = filterBy.listPrice
     return gFilterBy
 }
 
@@ -71,7 +79,7 @@ function getNextBookId(bookId) {
 }
 
 function getDefaultFilter() {
-    return { txt: '', minPrice: ''}
+    return { txt: '', listPrice: ''}
 }
 
 function _createBooks() {
@@ -523,7 +531,7 @@ function _createBooks() {
     }
 }
 
-function _createBook(id, txt,minPrice) {
-    const book = getEmptyBook(id, txt,minPrice)
+function _createBook(id, txt,listPrice) {
+    const book = getEmptyBook(id, txt,listPrice)
     return book
 }

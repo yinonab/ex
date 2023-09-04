@@ -5,3 +5,18 @@ h4.red {
 h4.green {
     color: green;
 }
+
+.read {
+    background-color:transparent;
+    display: inline-block;
+    color: #0073e6;
+    border: none;
+    text-decoration: underline;
+    cursor: pointer;
+
+}
+
+.read:hover {
+    text-decoration: none;
+
+}
